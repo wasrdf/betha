@@ -17,10 +17,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-/**
- *
- * @author Was
- */
+
 @ManagedBean
 @ViewScoped
 public class ItemController {
