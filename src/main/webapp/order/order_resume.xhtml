@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Resumo da compra</title>
+        <link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+
+        <f:metadata>
+            <f:viewParam name="IdOrder" value="#{orderController.idOrder}" />
+        </f:metadata>
+    </h:head>
+    <h:body>
+        <h:form id="frmDetalhe">
+            <h:panelGrid  class="container">
+                <h:panelGrid width="100%" style="background-color: #66ffff">
+                    <h1 align="center">Detalhe do Pedido</h1>
+                </h:panelGrid>
+
+                <br/>
+                <p:outputLabel style="color: #ff9999;font-weight: bold" value="Número do pedido: # #{orderController.idOrder}" />
+
+                <h:panelGrid width="100%" columns="2">
+                    <h:panelGrid>
+                        <p:outputLabel style="color: #ff9999;font-weight: bold" value="Data do pedido" />
+                        <p:outputLabel value="#{orderController.order.dateOrder}" >
+                            <f:convertDateTime timeZone="America/Sao_Paulo"  pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </h:panelGrid>
+
+
+                    <h:panelGrid style="float: right">
+                        <h2 style="text-align: right">Valor total </h2>
+                        <h1 style="color: red;text-align: right">R$ #{orderController.total}</h1>
+                    </h:panelGrid>
+
+                </h:panelGrid>
+                <br/>
+                <br/>
+                <h:panelGrid width="100%" border="1">
+                    <p:dataTable  value="#{orderController.orderItemList}" id="cart" var="cart" emptyMessage="Nenhum produto encontrado">
+
+                        <p:column  headerText="Nome do produto">
+                            <p:outputLabel value="#{cart.itemName}" />
+                        </p:column>
+
+                        <p:column  headerText="Quantidade">
+                            <p:outputLabel value="#{cart.quantity}" />
+                        </p:column>
+
+                        <p:column style="text-align: right"  headerText="Preço unitário">
+                            <p:outputLabel value="#{cart.unitCost}" >
+                                <f:convertNumber maxFractionDigits="2" groupingUsed="true" maxIntegerDigits="14" type="currency" currencySymbol="R$" /> 
+                            </p:outputLabel>
+                        </p:column>
+
+                        <p:column style="text-align: right"   headerText="Subtotal">
+                            <p:outputLabel  value="#{cart.totalCost}" >
+                                <f:convertNumber maxFractionDigits="2" groupingUsed="true" maxIntegerDigits="14" type="currency" currencySymbol="R$" /> 
+                            </p:outputLabel>
+                        </p:column>
+
+
+                    </p:dataTable>
+                </h:panelGrid>
+
+                <br/>
+            </h:panelGrid>
+
+        </h:form>
+        <h:form class="container">                
+            <h:panelGrid columns="2">
+                <p:commandButton value="imprimir" >
+                    <p:printer target="frmDetalhe"  />
+                </p:commandButton>
+
+            </h:panelGrid>
+        </h:form>
+
+    </h:body>
+</html>
+

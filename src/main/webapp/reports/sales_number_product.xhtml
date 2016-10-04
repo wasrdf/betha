@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Relatório</title>
+        <link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+
+        <f:metadata>
+            <f:viewAction action="#{reportController.init()}" />
+        </f:metadata>
+    </h:head>
+    <h:body>
+        <h:form  id="frmDetalhe">
+            <h:panelGrid  class="container">
+
+                <p:panel style="background-color: #ccffcc"  header="Quantidade de vendas por produto">
+                    <p:chart type="bar" id="item" model="#{reportController.barChartItem}" responsive="true"  />
+                </p:panel>
+
+            </h:panelGrid>
+            
+            <br />
+
+            
+            <h:panelGrid class="container">
+            <h1>Total de vendas do mês atual</h1>
+            <br />
+            <p:commandButton ajax="false" style="text-align: center" value="Exportar para excel" >
+                <p:dataExporter target="sales" type="xls" fileName="venda_mensal" pageOnly="true" />
+            </p:commandButton>
+            <br/>
+            <p:dataTable value="#{reportController.salesByMonth}" var="sales" id="sales" >
+                    <p:column headerText="N° Pedido">
+                        <h:outputText value="#{sales.idOrder}" />
+                    </p:column>
+                    <p:column headerText="Produto">
+                        <h:outputText value="#{sales.itemName}" />
+                    </p:column>
+
+                    <p:column headerText="Quantidade">
+                        <h:outputText value="#{sales.quantity}" />
+                    </p:column>
+                    <p:column headerText="Valor total">
+                        <h:outputText value="#{sales.totalCost}" >
+                            <f:convertNumber maxFractionDigits="2" groupingUsed="true" maxIntegerDigits="14" type="currency" currencySymbol="R$" /> 
+                        </h:outputText>                        
+                    </p:column>
+
+                    <p:column headerText="Data do pedido">
+                        <h:outputText value="#{sales.dateOrder}">
+                            <f:convertDateTime timeZone="America/Sao_Paulo"  pattern="dd/MM/yyyy"/>  
+                        </h:outputText>
+                    </p:column>
+
+
+                </p:dataTable>
+            </h:panelGrid>
+
+        </h:form>
+    </h:body>
+</html>
+

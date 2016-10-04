@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Betha Sistemas</title>
+        <f:metadata>
+            <f:viewAction action="#{orderController.listItens()}" />
+        </f:metadata>
+         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    </h:head>
+    <h:body style="color: #0099ff">
+        <div>
+            <p:ajaxStatus   onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+            <p:dialog resizable="false" responsive="true" draggable="false"  position="center"  closable="false"   widgetVar="statusDialog" modal="true" >                                        
+                <img width="300" height="32" src="img/ajax-loader.gif" alt=""/>
+            </p:dialog>
+        </div>
+        <h:form class="container" id="frmPrincipal" >
+            <img src="img/topo.png" width="100%" class="img-responsive img-rounded" alt=""/>
+            <br/>
+            <br/>
+            
+            
+            <p:messages id="messages"  autoUpdate="true" closable="true" />
+            <p:growl autoUpdate="true"   id="msg"   />  
+            
+              <h:panelGrid columns="2">
+                  <p:inputText size="50" value="#{orderController.search}" placeholder="Pesquisar produto por nome" />
+                  <p:commandButton style="margin-left: 10px;width: 150px"  value="Pesquisar" actionListener="#{orderController.listItens()}" update="itens" />               
+            </h:panelGrid>
+            <br/>
+            
+            <h:panelGrid>
+                <p:outputLabel value="Produto(s)" />
+                <p:dataTable   value="#{orderController.items}" id="itens" var="i" emptyMessage="Nenhum produto encontrado">
+                    <p:column sortBy="#{i.name}" headerText="Nome">
+                        <p:outputLabel style="text-decoration-color: #0099ff" value="#{i.name}" />
+                    </p:column>
+                    <p:column sortBy="#{i.description}" headerText="Descrição">
+                        <p:outputLabel value="#{i.description}" />
+                    </p:column>
+                    <p:column style="text-align: right" sortBy="#{i.unitValue}" headerText="Valor">
+                        <p:outputLabel value="#{i.unitValue}" >
+                            <f:convertNumber maxFractionDigits="2" groupingUsed="true" maxIntegerDigits="14" type="currency" currencySymbol="R$" /> 
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column style="text-align: center" headerText="Adicionar">
+                        <p:commandButton  value="Adicionar ao carrinho" actionListener="#{orderController.addToCart(i)}" update=":frmPrincipal" />
+                    </p:column>
+
+                </p:dataTable>
+                <p:separator />
+
+                <p:outputLabel value="Carrinho de compras"  />
+
+                <p:dataTable  value="#{orderController.orderItemList}" id="cart" var="cart" emptyMessage="Nenhum produto encontrado">
+                    <p:column sortBy="#{cart.itemName}" headerText="Nome do produto">
+                        <p:outputLabel value="#{cart.itemName}" />
+                    </p:column>
+                    <p:column style="text-align: center" sortBy="#{cart.quantity}" headerText="Quantidade">                        
+                        <p:spinner size="10" min="1" value="#{cart.quantity}" >
+                            <p:ajax event="change" update=":frmPrincipal" listener="#{orderController.calculeTotalValue(cart)}" />
+                        </p:spinner>
+                    </p:column>
+
+                    <p:column style="text-align: right" sortBy="#{cart.unitCost}" headerText="Preço unitário">
+                        <p:outputLabel value="#{cart.unitCost}" >
+                            <f:convertNumber maxFractionDigits="2" groupingUsed="true" maxIntegerDigits="14" type="currency" currencySymbol="R$" /> 
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column style="text-align: right"  sortBy="#{cart.totalCost}" headerText="Subtotal">
+                        <p:outputLabel  value="#{cart.totalCost}" >
+                            <f:convertNumber maxFractionDigits="2" groupingUsed="true" maxIntegerDigits="14" type="currency" currencySymbol="R$" /> 
+                        </p:outputLabel>
+                    </p:column>
+
+
+                    <p:column style="text-align: center" headerText="Adicionar">
+                        <p:commandButton  value="- Remover" actionListener="#{orderController.removeItem(cart)}" styleClass="RedButton" update=":frmPrincipal" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:separator />
+                <h:panelGroup id="pnlTotal">
+                    <h:panelGrid columns="2" style="float: right;">
+                        <h3>Total:<span style="color: red;text-align: right"> R$ #{orderController.total}</span> </h3>
+                    </h:panelGrid>
+                    <br/>
+                    <p:commandButton value="Comprar" id="buy" rendered="#{orderController.orderItemList.size() > 0}" actionListener="#{orderController.buy()}"  update=":frmPrincipal  msg">
+                        <p:confirm header="Confirmação" message="Deseja realmente efetuar sua compra?" icon="ui-icon-alert" />
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" />
+                    </p:confirmDialog>            
+                </h:panelGroup>
+
+            </h:panelGrid>
+        </h:form>
+        <br/>
+        <br/>
+        <br/>
+        <p:separator />
+    </h:body>
+</html>
+
