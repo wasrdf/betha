@@ -5,27 +5,28 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Betha Sistemas</title>       
+        <title>Cadastro de produtos</title>       
         <link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <script src="../js/bootstrap.min.js" type="text/javascript"></script>
     </h:head>
-    <h:body>
+    <h:body style="background-color: #cccccc">
         <div>
             <p:ajaxStatus   onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog resizable="false" responsive="true" draggable="false"  position="center"  closable="false"   widgetVar="statusDialog" modal="true" >                                        
                 <img width="300" height="32" src="../img/ajax-loader.gif" alt=""/>
             </p:dialog>
         </div>
-        <img  src="../img/topo.png" width="100%" class="container img-responsive img-rounded" alt=""/>
+        <br/> 
+        <div class="container">
+            <img  src="../img/topo.png" width="100%" class="img-responsive img-rounded" alt=""/>
+        </div>
         <br/>
         <br/>
-      
         <p:messages id="messages" class="container" autoUpdate="true" closable="true" />
         <p:growl autoUpdate="true"   id="msg"   />  
-
         <h:form rendered="#{itemController.screem == 0}" class="container" id="frmPrincipal" >
-            
+
 
 
             <h:panelGrid columns="3">
@@ -64,16 +65,16 @@
         <h:form class="container" rendered="#{itemController.screem == 1}" id='frmDetalhe'>
             <h:panelGrid >
                 <p:outputLabel value="Nome do produto" />
-                <p:inputText size="100" value="#{itemController.item.name}"  required="#{param['frmDetalhe:salvar'] !=  null }" requiredMessage="Nome do produto é obrigátorio" />
+                <p:inputText size="60" value="#{itemController.item.name}"  required="#{param['frmDetalhe:salvar'] !=  null }" requiredMessage="Nome do produto é obrigátorio" />
             </h:panelGrid>
             <br/>
             <h:panelGrid>
                 <p:outputLabel value="Descrição" />
-                <p:inputText  size="100" value="#{itemController.item.description}"  />
+                <p:inputText  size="60" value="#{itemController.item.description}"  />
             </h:panelGrid>
             <br/>
             <h:panelGrid >
-                  <p:outputLabel value="Valor" />
+                <p:outputLabel value="Valor" />
                 <p:inputText  placeholder="R$" value="#{itemController.item.unitValue}" required="#{param['frmDetalhe:salvar'] !=  null }" requiredMessage="Valor é obrigatório" style="text-align: right">
                     <f:convertNumber pattern="#,##0.00" minFractionDigits="2"/>  
                 </p:inputText>
@@ -84,14 +85,17 @@
                 <p:commandButton styleClass="BlueButton" style="margin-left: 10px" value="Voltar" ajax="false" actionListener="#{itemController.changeScreem(0)}" update=":frmDetalhe :frmPrincipal" />
 
                 <p:commandButton style="margin-left: 10px" value="Deletar" styleClass="RedButton" actionListener="#{itemController.deleteItem()}" ajax="false" rendered="#{itemController.item.idItem != 0}" update=":frmPrincipal :frmDetalhe  msg">
-               
+
                 </p:commandButton>
 
-                                                                         
+
 
             </h:panelGrid>
 
         </h:form>
+        <br/>
+        <br/>
+        <br/>
     </h:body>
 </html>
 

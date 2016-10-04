@@ -14,16 +14,17 @@
             <f:viewAction action="#{reportController.init()}" />
         </f:metadata>
     </h:head>
-    <h:body>
-        <h:form  id="frmDetalhe">
-            <h:panelGrid  class="container">
-
+    <h:body style="background-color: #cccccc">
+        <h:form class="container"  id="frmDetalhe">
+            <br/>
+                  <img src="../img/topo.png" width="100%" class="img-responsive img-rounded" alt="" />
+            <br/>
+            <br/>
+            
                 <p:panel style="background-color: #ccffcc"  header="Quantidade de vendas por produto">
                     <p:chart type="bar" id="item" model="#{reportController.barChartItem}" responsive="true"  />
                 </p:panel>
 
-            </h:panelGrid>
-            
             <br />
 
             
@@ -62,6 +63,9 @@
             </h:panelGrid>
 
         </h:form>
+        <br/>
+        <br/>
+        <br/>
     </h:body>
 </html>
 

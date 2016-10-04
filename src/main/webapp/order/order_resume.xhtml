@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Resumo da compra</title>
+        <title>Detalhe do pedido</title>
         <link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <script src="../js/bootstrap.min.js" type="text/javascript"></script>
@@ -14,19 +14,24 @@
             <f:viewParam name="IdOrder" value="#{orderController.idOrder}" />
         </f:metadata>
     </h:head>
-    <h:body>
+    <h:body style="background-color: #cccccc">
         <h:form id="frmDetalhe">
+            <br/>
+            <br/>
             <h:panelGrid  class="container">
-                <h:panelGrid width="100%" style="background-color: #66ffff">
+                <h:panelGrid style="background-color: #0078ae;color: white" width="100%" border="1">
                     <h1 align="center">Detalhe do Pedido</h1>
                 </h:panelGrid>
 
                 <br/>
-                <p:outputLabel style="color: #ff9999;font-weight: bold" value="Número do pedido: # #{orderController.idOrder}" />
+                <h:panelGrid columns="2">
+                    <p:outputLabel style="font-weight: bold" value="Número do pedido: " />
+                    <p:outputLabel style="font-weight: bold;color: red"  value="##{orderController.idOrder}" />
+                </h:panelGrid>
 
                 <h:panelGrid width="100%" columns="2">
                     <h:panelGrid>
-                        <p:outputLabel style="color: #ff9999;font-weight: bold" value="Data do pedido" />
+                        <p:outputLabel style="font-weight: bold" value="Data do pedido" />
                         <p:outputLabel value="#{orderController.order.dateOrder}" >
                             <f:convertDateTime timeZone="America/Sao_Paulo"  pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
@@ -80,6 +85,10 @@
 
             </h:panelGrid>
         </h:form>
+        <br/>
+        <br/>
+        <br/>
+
 
     </h:body>
 </html>
