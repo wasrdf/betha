@@ -19,8 +19,8 @@ public class ConnectionFactory {
     public static Connection connect() {
         try {
             String usuario = "sa";
-            String url = "jdbc:sqlserver://192.168.0.10:1433;" + "databaseName=SGM;";
-            String senha = "//jmncbb100";
+            String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=SGM;";
+            String senha = "password";
             String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
             Class.forName(DRIVER);
             Connection con = null;
