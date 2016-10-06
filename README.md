@@ -1,6 +1,6 @@
 # betha
 
-istema web de compra de produtos desenvolvido na linguagem Java onde é possível realizar cadastro de produtos, efetuar compra destes produtos,gerar relatórios e exportar para o excel.
+Sistema web de compra de produtos desenvolvido na linguagem Java onde é possível realizar cadastro de produtos, efetuar compra destes produtos,gerar relatórios e exportar para o excel.
 
 Tecnologias utilizas.
 
